@@ -1,0 +1,264 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "paas ops",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "CreateVMInstancesIntent",
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "image",
+                            "type": "AMAZON.LITERAL"
+                        }
+                    ],
+                    "samples": [
+                        "create {number} VM instance using {image} image",
+                        "create {number} VM instances using {image} image"
+                    ]
+                },
+                {
+                    "name": "ScaleUpServerGroupIntent",
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "add {number} instance to the cluster",
+                        "add {number} instances to the cluster",
+                        "scale up cluster by {number} VM instances"
+                    ]
+                },
+                {
+                    "name": "ScaleDownServerGroupIntent",
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "scale down cluster by {number} VM instances",
+                        "remove {number} instance from the cluster",
+                        "remove {number} instances from the cluster"
+                    ]
+                },
+                {
+                    "name": "ResizeServerGroupIntent",
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "resize server group to maximum of {number} VM instances",
+                        "resize cluster to maximum of {number} VM instances"
+                    ]
+                },
+                {
+                    "name": "UpdateVMInstanceTypeIntent",
+                    "slots": [
+                        {
+                            "name": "type",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "change type to {type}",
+                        "change instance type to {type}"
+                    ]
+                },
+                {
+                    "name": "FindPendingRequestIntent",
+                    "slots": [],
+                    "samples": [
+                        "is there any pending request",
+                        "are there any pending requests"
+                    ]
+                },
+                {
+                    "name": "QueryPreviousRequestStatusIntent",
+                    "slots": [],
+                    "samples": [
+                        "status",
+                        "find status of previous request",
+                        "what is the status of previous request"
+                    ]
+                },
+                {
+                    "name": "QueryServerGroupSizeIntent",
+                    "slots": [],
+                    "samples": [
+                        "size",
+                        "size of cluster",
+                        "size of server group",
+                        "how many VM instances in the cluster"
+                    ]
+                },
+                {
+                    "name": "QueryResponseTimeIntent",
+                    "slots": [],
+                    "samples": [
+                        "response time",
+                        "what is the averge response time"
+                    ]
+                },
+                {
+                    "name": "QueryTransactionPerSecIntent",
+                    "slots": [],
+                    "samples": [
+                        "tps",
+                        "what is the average tps"
+                    ]
+                },
+                {
+                    "name": "QueryVMInstancesParamIntent",
+                    "slots": [],
+                    "samples": [
+                        "what is the current instance type"
+                    ]
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "CreateVMInstancesIntent",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.311789244128"
+                    },
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "image",
+                            "type": "AMAZON.LITERAL",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "ScaleUpServerGroupIntent",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.1457921460698"
+                    },
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "ScaleDownServerGroupIntent",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.327005451138"
+                    },
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "ResizeServerGroupIntent",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.1337480826840"
+                    },
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Confirm.Intent.311789244128",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "creating cluster of size {number} using {image}, proceed?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.1457921460698",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "adding {number} instance to the cluster, proceed?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.327005451138",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "removing {number} instance from the cluster, proceed?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.1337480826840",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "resizing cluster size to {number}, proceed?"
+                    }
+                ]
+            }
+        ]
+    }
+}
