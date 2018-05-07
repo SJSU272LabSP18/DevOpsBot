@@ -32,10 +32,18 @@
                         },
                         {
                             "name": "image",
-                            "type": "AMAZON.LITERAL"
+                            "type": "ImageTag"
                         }
                     ],
                     "samples": [
+                        "build {number} instance of {image} image",
+                        "build {number} instances of {image} image",
+                        "create {number} instances of {image} image",
+                        "create {number} instance of {image} image",
+                        "create {number} instance with {image} image",
+                        "create {number} instances with {image} image",
+                        "create {number} instances using {image} image",
+                        "create {number} instance using {image} image",
                         "create {number} VM instance using {image} image",
                         "create {number} VM instances using {image} image"
                     ]
@@ -46,12 +54,19 @@
                         {
                             "name": "number",
                             "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "clusterTag",
+                            "type": "HostTag"
                         }
                     ],
                     "samples": [
-                        "add {number} instance to the cluster",
-                        "add {number} instances to the cluster",
-                        "scale up cluster by {number} VM instances"
+                        "scale up {clusterTag} cluster by {number} VM instances",
+                        "scale up cluster {clusterTag} by {number} instance",
+                        "scale up cluster {clusterTag} by {number} VM instance",
+                        "scale up cluster {clusterTag} by {number} instances",
+                        "add {number} instance to the {clusterTag} cluster",
+                        "add {number} instances to the {clusterTag} cluster"
                     ]
                 },
                 {
@@ -60,12 +75,21 @@
                         {
                             "name": "number",
                             "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "clusterTag",
+                            "type": "HostTag"
                         }
                     ],
                     "samples": [
-                        "scale down cluster by {number} VM instances",
-                        "remove {number} instance from the cluster",
-                        "remove {number} instances from the cluster"
+                        "remove {number} instance from {clusterTag} cluster",
+                        "remove {number} instances from the {clusterTag} cluster",
+                        "scale down {clusterTag} cluster by {number} VM instance",
+                        "scale down {clusterTag} cluster by {number} instances",
+                        "scale down {clusterTag} cluster by {number} instance",
+                        "scale down {clusterTag} cluster by {number} VM instances",
+                        "remove {number} instance from the {clusterTag} cluster",
+                        "remove {number} instances from {clusterTag} cluster"
                     ]
                 },
                 {
@@ -74,78 +98,111 @@
                         {
                             "name": "number",
                             "type": "AMAZON.NUMBER"
-                        }
-                    ],
-                    "samples": [
-                        "resize server group to maximum of {number} VM instances",
-                        "resize cluster to maximum of {number} VM instances"
-                    ]
-                },
-                {
-                    "name": "UpdateVMInstanceTypeIntent",
-                    "slots": [
+                        },
                         {
-                            "name": "type",
-                            "type": "AMAZON.NUMBER"
+                            "name": "clusterTag",
+                            "type": "HostTag"
                         }
                     ],
                     "samples": [
-                        "change type to {type}",
-                        "change instance type to {type}"
+                        "resize {clusterTag} cluster to maximum of {number} VM instance",
+                        "resize {clusterTag} server group to maximum of {number} instances",
+                        "resize {clusterTag} server group to maximum of {number} VM instances",
+                        "resize {clusterTag} cluster to maximum of {number} VM instances"
                     ]
                 },
                 {
                     "name": "FindPendingRequestIntent",
                     "slots": [],
                     "samples": [
-                        "is there any pending request",
-                        "are there any pending requests"
-                    ]
-                },
-                {
-                    "name": "QueryPreviousRequestStatusIntent",
-                    "slots": [],
-                    "samples": [
-                        "status",
-                        "find status of previous request",
-                        "what is the status of previous request"
+                        "any instance in pending state",
+                        "is there any instance in pending state",
+                        "are there any instances in pending state"
                     ]
                 },
                 {
                     "name": "QueryServerGroupSizeIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "clusterTag",
+                            "type": "HostTag"
+                        }
+                    ],
                     "samples": [
-                        "size",
-                        "size of cluster",
-                        "size of server group",
-                        "how many VM instances in the cluster"
-                    ]
-                },
-                {
-                    "name": "QueryResponseTimeIntent",
-                    "slots": [],
-                    "samples": [
-                        "response time",
-                        "what is the averge response time"
-                    ]
-                },
-                {
-                    "name": "QueryTransactionPerSecIntent",
-                    "slots": [],
-                    "samples": [
-                        "tps",
-                        "what is the average tps"
+                        "how many instances in {clusterTag} cluster",
+                        "how many instances in the {clusterTag} cluster",
+                        "size of {clusterTag} cluster",
+                        "size of {clusterTag} server group",
+                        "how many VM instances in the {clusterTag} cluster"
                     ]
                 },
                 {
                     "name": "QueryVMInstancesParamIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "clusterTag",
+                            "type": "HostTag"
+                        }
+                    ],
                     "samples": [
-                        "what is the current instance type"
+                        "what is the VM instance type used by {clusterTag} cluster",
+                        "VM instance type used by {clusterTag} cluster",
+                        "what is the instance type used by {clusterTag} cluster",
+                        "instance type used by {clusterTag} cluster"
+                    ]
+                },
+                {
+                    "name": "QueryCpuUtilization",
+                    "slots": [
+                        {
+                            "name": "hostTag",
+                            "type": "HostTag"
+                        }
+                    ],
+                    "samples": [
+                        "cpu utilization of an instance in {hostTag} cluster",
+                        "what is cpu utilization of an instance in {hostTag} cluster",
+                        "average cpu utilization of an instance in {hostTag} cluster"
                     ]
                 }
             ],
-            "types": []
+            "types": [
+                {
+                    "name": "ImageTag",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "app"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "InstanceType",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "t two micro"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "HostTag",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "test"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "app"
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         "dialog": {
             "intents": [
@@ -165,7 +222,7 @@
                         },
                         {
                             "name": "image",
-                            "type": "AMAZON.LITERAL",
+                            "type": "ImageTag",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
@@ -185,6 +242,13 @@
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
+                        },
+                        {
+                            "name": "clusterTag",
+                            "type": "HostTag",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 },
@@ -198,6 +262,13 @@
                         {
                             "name": "number",
                             "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "clusterTag",
+                            "type": "HostTag",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
@@ -217,6 +288,13 @@
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
+                        },
+                        {
+                            "name": "clusterTag",
+                            "type": "HostTag",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 }
@@ -228,7 +306,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "creating cluster of size {number} using {image}, proceed?"
+                        "value": "creating cluster of size {number} using {image} image, proceed?"
                     }
                 ]
             },
@@ -237,7 +315,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "adding {number} instance to the cluster, proceed?"
+                        "value": "adding {number} instance to the {clusterTag} cluster, proceed?"
                     }
                 ]
             },
@@ -246,7 +324,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "removing {number} instance from the cluster, proceed?"
+                        "value": "removing {number} instance from the {clusterTag} cluster, proceed?"
                     }
                 ]
             },
@@ -255,7 +333,16 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "resizing cluster size to {number}, proceed?"
+                        "value": "resizing {clusterTag} cluster size to {number} instances, proceed?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.98049073890",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Changing instance type to {type} , proceed?"
                     }
                 ]
             }
