@@ -8,10 +8,6 @@
 // This code includes helper functions for compatibility with versions of the SDK prior to 1.0.9, which includes the dialog directives.
 
 
-// Load the SDK for JavaScript
-var AWS = require('aws-sdk');
-// Set the region 
-AWS.config.update({region: 'us-west-2'});
 
  // 1. Text strings =====================================================================================================
  //    Modify these strings and messages to change the behavior of your Lambda function
@@ -19,11 +15,12 @@ AWS.config.update({region: 'us-west-2'});
 
 let speechOutput;
 let reprompt;
-let welcomeOutput = "This is a placeholder welcome message. This skill includes 16 intents. Try one of your intent utterances to test the skill.";
+let welcomeOutput = "This is a placeholder welcome message. This skill includes 13 intents. Try one of your intent utterances to test the skill.";
 let welcomeReprompt = "sample re-prompt text";
 // 2. Skill Code =======================================================================================================
 "use strict";
 const Alexa = require('alexa-sdk');
+const http = require('http');
 const APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
 speechOutput = '';
 const handlers = {
@@ -74,18 +71,27 @@ const handlers = {
 		speechOutput = '';
 		//any intent slot variables are listed here for convenience
 
-		let numberSlotRaw = this.event.request.intent.slots.number.value;
-		console.log(numberSlotRaw);
 		let numberSlot = resolveCanonical(this.event.request.intent.slots.number);
 		console.log(numberSlot);
-		let imageSlotRaw = this.event.request.intent.slots.image.value;
-		console.log(imageSlotRaw);
 		let imageSlot = resolveCanonical(this.event.request.intent.slots.image);
 		console.log(imageSlot);
 
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named CreateVMInstancesIntent, which includes dialogs. This intent has 2 slots, which are number, and image. Anything else?";
-		this.emit(':ask', speechOutput, speechOutput);
+		let confirmSlot = this.event.request.intent.confirmationStatus;
+		console.log(confirmSlot);
+
+		if(confirmSlot != "DENIED"){
+			let path = '/provision/hosts/create?image_tag='+imageSlot+'&count='+numberSlot;
+			httpGet(path,  myResult => {
+                console.log('myResult');
+                console.log(myResult);
+                this.response.speak(myResult).listen('try again');
+                this.emit(':responseReady');
+
+		    });
+		} else {
+			 speechOutput = "Okay, cancelled your request.";
+			 this.emit(':ask', speechOutput, speechOutput);
+		}
 	},
 	'ScaleUpServerGroupIntent': function () {
 		//delegate to Alexa to collect all the required slot values
@@ -93,14 +99,26 @@ const handlers = {
 		speechOutput = '';
 		//any intent slot variables are listed here for convenience
 
-		let numberSlotRaw = this.event.request.intent.slots.number.value;
-		console.log(numberSlotRaw);
 		let numberSlot = resolveCanonical(this.event.request.intent.slots.number);
 		console.log(numberSlot);
+		let clusterTagSlot = resolveCanonical(this.event.request.intent.slots.clusterTag);
+        console.log(clusterTagSlot);
+		let confirmSlot = this.event.request.intent.confirmationStatus;
+		console.log(confirmSlot);
 
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named ScaleUpServerGroupIntent, which includes dialogs. This intent has one slot, which is number. Anything else?";
-		this.emit(':ask', speechOutput, speechOutput);
+		if(confirmSlot != "DENIED"){
+			let path = '/provision/hosts/create?image_tag='+clusterTagSlot+'&count='+numberSlot;
+			httpGet(path,  myResult => {
+            console.log('myResult');
+            console.log(myResult);
+            this.response.speak(myResult).listen('try again');
+            this.emit(':responseReady');
+			});
+		} else {
+			 speechOutput = "Okay, cancelled your request";
+			 this.emit(':ask', speechOutput, speechOutput);
+		}
+
 	},
 	'ScaleDownServerGroupIntent': function () {
 		//delegate to Alexa to collect all the required slot values
@@ -108,109 +126,134 @@ const handlers = {
 		speechOutput = '';
 		//any intent slot variables are listed here for convenience
 
-		let numberSlotRaw = this.event.request.intent.slots.number.value;
-		console.log(numberSlotRaw);
 		let numberSlot = resolveCanonical(this.event.request.intent.slots.number);
 		console.log(numberSlot);
+		let clusterTagSlot = resolveCanonical(this.event.request.intent.slots.clusterTag);
+        console.log(clusterTagSlot);
+		let confirmSlot = this.event.request.intent.confirmationStatus;
+		console.log(confirmSlot);
 
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named ScaleDownServerGroupIntent, which includes dialogs. This intent has one slot, which is number. Anything else?";
-		this.emit(':ask', speechOutput, speechOutput);
+		if(confirmSlot != "DENIED"){
+			let path = '/provision/hosts/state?host_tag='+clusterTagSlot+'&action=terminate&count='+numberSlot;
+			httpGet(path,  myResult => {
+            console.log('myResult');
+            console.log(myResult);
+            this.response.speak(myResult).listen('try again');
+            this.emit(':responseReady');
+			});
+		} else {
+			 speechOutput = "Okay, cancelled your request";
+			 this.emit(':ask', speechOutput, speechOutput);
+		}
 	},
 	'ResizeServerGroupIntent': function () {
 		//delegate to Alexa to collect all the required slot values
        let filledSlots = delegateSlotCollection.call(this);
 		speechOutput = '';
-		//any intent slot variables are listed here for convenience
 
-		let numberSlotRaw = this.event.request.intent.slots.number.value;
-		console.log(numberSlotRaw);
 		let numberSlot = resolveCanonical(this.event.request.intent.slots.number);
 		console.log(numberSlot);
+		let clusterTagSlot = resolveCanonical(this.event.request.intent.slots.clusterTag);
+		console.log(clusterTagSlot);
+		let confirmSlot = this.event.request.intent.confirmationStatus;
+		console.log(confirmSlot);
 
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named ResizeServerGroupIntent, which includes dialogs. This intent has one slot, which is number. Anything else?";
-		this.emit(':ask', speechOutput, speechOutput);
+	    if(confirmSlot != "DENIED"){
+            let path = '/provision/hosts/state?host_tag='+clusterTagSlot+'&action=resize&count='+numberSlot;;
+            httpGet(path,  myResult => {
+            console.log('myResult');
+            console.log(myResult);
+            this.response.speak(myResult).listen('try again');
+            this.emit(':responseReady');
+            });
+        } else {
+             speechOutput = "Okay, cancelled your request";
+             this.emit(':ask', speechOutput, speechOutput);
+        }
 	},
-	'UpdateVMInstanceTypeIntent': function () {
-		speechOutput = '';
-
-		//any intent slot variables are listed here for convenience
-
-		let typeSlotRaw = this.event.request.intent.slots.type.value;
-		console.log(typeSlotRaw);
-		let typeSlot = resolveCanonical(this.event.request.intent.slots.type);
-		console.log(typeSlot);
-
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named UpdateVMInstanceTypeIntent. This intent has one slot, which is type. Anything else?";
-		this.emit(":ask", speechOutput, speechOutput);
-    },
 	'FindPendingRequestIntent': function () {
 		speechOutput = '';
 
-		//any intent slot variables are listed here for convenience
-
-
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named FindPendingRequestIntent. This intent has no slots. Anything else?";
-		this.emit(":ask", speechOutput, speechOutput);
-    },
-	'QueryPreviousRequestStatusIntent': function () {
-		speechOutput = '';
-
-		//any intent slot variables are listed here for convenience
-
-
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named QueryPreviousRequestStatusIntent. This intent has no slots. Anything else?";
-		this.emit(":ask", speechOutput, speechOutput);
+        let path = '/provision/hosts/info?host_tag=app&filter=pending';
+        httpGet(path,  myResult => {
+            console.log('myResult');
+            console.log(myResult);
+            this.response.speak(myResult).listen('try again');
+            this.emit(':responseReady');
+        });
     },
 	'QueryServerGroupSizeIntent': function () {
 		speechOutput = '';
 
-		//any intent slot variables are listed here for convenience
+		let clusterTagSlot = resolveCanonical(this.event.request.intent.slots.clusterTag);
+		console.log(clusterTagSlot);
 
-
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named QueryServerGroupSizeIntent. This intent has no slots. Anything else?";
-		this.emit(":ask", speechOutput, speechOutput);
-    },
-	'QueryResponseTimeIntent': function () {
-		speechOutput = '';
-
-		//any intent slot variables are listed here for convenience
-
-
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named QueryResponseTimeIntent. This intent has no slots. Anything else?";
-		this.emit(":ask", speechOutput, speechOutput);
-    },
-	'QueryTransactionPerSecIntent': function () {
-		speechOutput = '';
-
-		//any intent slot variables are listed here for convenience
-
-
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named QueryTransactionPerSecIntent. This intent has no slots. Anything else?";
-		this.emit(":ask", speechOutput, speechOutput);
+		let path = '/provision/hosts/query?host_tag='+clusterTagSlot+'&param=size';
+        httpGet(path,  myResult => {
+            console.log('myResult');
+            console.log(myResult);
+            this.response.speak(myResult).listen('try again');
+            this.emit(':responseReady');
+        });
     },
 	'QueryVMInstancesParamIntent': function () {
 		speechOutput = '';
 
-		//any intent slot variables are listed here for convenience
+		let clusterTagSlot = resolveCanonical(this.event.request.intent.slots.clusterTag);
+		console.log(clusterTagSlot);
 
+		let path = '/provision/hosts/query?host_tag='+clusterTagSlot+'&param=type';
+        httpGet(path,  myResult => {
+            console.log('myResult');
+            console.log(myResult);
+            this.response.speak(myResult).listen('try again');
+            this.emit(':responseReady');
+        });
+    },
+	'QueryCpuUtilization': function () {
+		speechOutput = '';
 
-		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named QueryVMInstancesParamIntent. This intent has no slots. Anything else?";
-		this.emit(":ask", speechOutput, speechOutput);
-    },	
+		let hostTagSlot = resolveCanonical(this.event.request.intent.slots.hostTag);
+		console.log(hostTagSlot);
+
+		let path = '/provision/hosts/query?host_tag='+hostTagSlot+'&param=cpu';
+        httpGet(path,  myResult => {
+            console.log('myResult');
+            console.log(myResult);
+            this.response.speak(myResult).listen('try again');
+            this.emit(':responseReady');
+        });
+    },
 	'Unhandled': function () {
-        speechOutput = "The skill didn't quite understand what you wanted.  Do you want to try something else?";
+        speechOutput = "The skill didn't quite understand what you wanted. Do you want to try something else?";
         this.emit(':ask', speechOutput, speechOutput);
     }
 };
+
+function httpGet(path, callback) {
+
+    // Update these options with the details of the web service you would like to call
+   	var options = {
+        host: '127.0.0.1',
+        port: 8080,
+        path: path
+    };
+
+    var req = http.request(options, res => {
+        res.setEncoding('utf8');
+        var returnData = "";
+
+        res.on('data', chunk => {
+            returnData = returnData + chunk;
+        });
+
+        res.on('end', () => {
+            callback(returnData);  // this will execute whatever function the caller defined, with one argument
+        });
+    });
+    req.end();
+}
+
 
 exports.handler = (event, context) => {
     const alexa = Alexa.handler(event, context);
@@ -248,8 +291,8 @@ function delegateSlotCollection(){
       //you have defaults, then return Dialog.Delegate with this updated intent
       // in the updatedIntent property
       //this.emit(":delegate", updatedIntent); //uncomment this is using ASK SDK 1.0.9 or newer
-	  
-	  //this code is necessary if using ASK SDK versions prior to 1.0.9 
+
+	  //this code is necessary if using ASK SDK versions prior to 1.0.9
 	  if(this.isOverridden()) {
 			return;
 		}
@@ -259,12 +302,12 @@ function delegateSlotCollection(){
 			shouldEndSession: false
 		});
 		this.emit(':responseReady', updatedIntent);
-		
+
     } else if (this.event.request.dialogState !== "COMPLETED") {
       console.log("in not completed");
       // return a Dialog.Delegate directive with no updatedIntent property.
       //this.emit(":delegate"); //uncomment this is using ASK SDK 1.0.9 or newer
-	  
+
 	  //this code necessary is using ASK SDK versions prior to 1.0.9
 		if(this.isOverridden()) {
 			return;
@@ -275,7 +318,7 @@ function delegateSlotCollection(){
 			shouldEndSession: false
 		});
 		this.emit(':responseReady');
-		
+
     } else {
       console.log("in completed");
       console.log("returning: "+ JSON.stringify(this.event.request.intent));
