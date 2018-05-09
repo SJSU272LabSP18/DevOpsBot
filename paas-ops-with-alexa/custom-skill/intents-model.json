@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "paas ops",
+            "invocationName": "ops helper",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -61,6 +61,8 @@
                         }
                     ],
                     "samples": [
+                        "add {number} instances to {clusterTag} cluster",
+                        "add {number} instance to {clusterTag} cluster",
                         "scale up {clusterTag} cluster by {number} VM instances",
                         "scale up cluster {clusterTag} by {number} instance",
                         "scale up cluster {clusterTag} by {number} VM instance",
@@ -105,6 +107,10 @@
                         }
                     ],
                     "samples": [
+                        "resize {clusterTag} cluster to {number} instances",
+                        "resize {clusterTag} cluster to  {number} VM instances",
+                        "resize {clusterTag} cluster to {number}  instance",
+                        "resize {clusterTag} cluster to {number} VM instance",
                         "resize {clusterTag} cluster to maximum of {number} VM instance",
                         "resize {clusterTag} server group to maximum of {number} instances",
                         "resize {clusterTag} server group to maximum of {number} VM instances",
@@ -115,6 +121,10 @@
                     "name": "FindPendingRequestIntent",
                     "slots": [],
                     "samples": [
+                        "what is the status of my previous request",
+                        "what is the status of previous request",
+                        "status of previous request",
+                        "status of my previous request",
                         "any instance in pending state",
                         "is there any instance in pending state",
                         "are there any instances in pending state"
@@ -145,6 +155,8 @@
                         }
                     ],
                     "samples": [
+                        "type of instance used in {clusterTag} cluster",
+                        "what is the instance used in {clusterTag} cluster",
                         "what is the VM instance type used by {clusterTag} cluster",
                         "VM instance type used by {clusterTag} cluster",
                         "what is the instance type used by {clusterTag} cluster",
@@ -160,6 +172,10 @@
                         }
                     ],
                     "samples": [
+                        "cpu utilization of {hostTag} cluster",
+                        "average cpu utilization of {hostTag} cluster",
+                        "average cpu utilization in {hostTag} cluster",
+                        "cpu utilization in {hostTag} cluster",
                         "cpu utilization of an instance in {hostTag} cluster",
                         "what is cpu utilization of an instance in {hostTag} cluster",
                         "average cpu utilization of an instance in {hostTag} cluster"
