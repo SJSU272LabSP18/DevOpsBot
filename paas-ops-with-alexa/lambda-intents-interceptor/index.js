@@ -15,8 +15,8 @@
 
 let speechOutput;
 let reprompt;
-let welcomeOutput = "This is a placeholder welcome message. This skill includes 13 intents. Try one of your intent utterances to test the skill.";
-let welcomeReprompt = "sample re-prompt text";
+let welcomeOutput = "Welcome to paas ops with Alexa. I can help you with things like create instances, scale up, scale down, resize clusters. Also queries like status, instance type, cpu utilization etc. What can I help you with?";
+let welcomeReprompt = "Welcome to paas ops with Alexa";
 // 2. Skill Code =======================================================================================================
 "use strict";
 const Alexa = require('alexa-sdk');
@@ -28,16 +28,15 @@ const handlers = {
 		this.emit(':ask', welcomeOutput, welcomeReprompt);
 	},
 	'AMAZON.HelpIntent': function () {
-		speechOutput = 'Placeholder response for AMAZON.HelpIntent.';
-		reprompt = '';
-		this.emit(':ask', speechOutput, reprompt);
+		speechOutput = 'I can help you with things like create instances, scale up, scale down, resize clusters. Also queries like status, instance type, cpu utilization etc. What can I help you with?';
+		this.emit(':ask', speechOutput, speechOutput);
 	},
    'AMAZON.CancelIntent': function () {
-		speechOutput = 'Placeholder response for AMAZON.CancelIntent';
+		speechOutput = 'Okay, cancelled.';
 		this.emit(':tell', speechOutput);
 	},
    'AMAZON.StopIntent': function () {
-		speechOutput = 'Placeholder response for AMAZON.StopIntent.';
+		speechOutput = 'Okay, stopped.';
 		this.emit(':tell', speechOutput);
    },
    'SessionEndedRequest': function () {
@@ -50,19 +49,17 @@ const handlers = {
 
 		//any intent slot variables are listed here for convenience
 
-
 		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named AMAZON.YesIntent. This intent has no slots. Anything else?";
+		speechOutput = "Okay";
 		this.emit(":ask", speechOutput, speechOutput);
     },
 	'AMAZON.NoIntent': function () {
 		speechOutput = '';
-
+		
 		//any intent slot variables are listed here for convenience
-
-
+		
 		//Your custom intent handling goes here
-		speechOutput = "This is a place holder response for the intent named AMAZON.NoIntent. This intent has no slots. Anything else?";
+		speechOutput = "Okay";
 		this.emit(":ask", speechOutput, speechOutput);
     },
 	'CreateVMInstancesIntent': function () {
@@ -234,7 +231,7 @@ function httpGet(path, callback) {
 
     // Update these options with the details of the web service you would like to call
    	var options = {
-        host: '127.0.0.1',
+        host: '34.209.67.84',
         port: 8080,
         path: path
     };
