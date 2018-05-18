@@ -10,7 +10,7 @@ DevOpsBot automates routine AWS operations performed by AWS developer or perform
 
 ![System Architecture](https://github.com/SJSU272LabSP18/DevOpsBot/blob/master/DevOpsBot-Architecture.jpg)
 
-<p align="center">System Architecture<p>
+####<p align="center">Fig 1. System Architecture<p>
 
 ### System Interaction
 Use Invocation name to start: "Open Ops Helper".
