@@ -11,24 +11,17 @@ DevOpsBot automates routine AWS operations performed by AWS developer or perform
 ### System Interaction
 Use Invocation name to start: "Open Ops Helper".
 Sample utterances for each action are listed below.
-* Scale up cluster: 
-Utterance: Scale up <clusterName> cluster by <numbeOfInstances> VM instances 
+* Scale up cluster: Scale up <clusterName> cluster by <numbeOfInstances> VM instances 
   
-* Scale down cluster: 
-Utterance: Scale down <clusterName> cluster by <numbeOfInstances> VM instances
+* Scale down cluster: Scale down <clusterName> cluster by <numbeOfInstances> VM instances
 
-* Resize cluster: 
-Utterance: Resize <clusterName> cluster to <numberOfInstances> instances
+* Resize cluster: Resize <clusterName> cluster to <numberOfInstances> instances
 
-* Find pending requests: 
-Utterance: What is the status of my previous request
+* Find pending requests: What is the status of my previous request
 
-* Query size of cluster: 
-Utterance: What is the size of <clusterName> cluster
+* Query size of cluster: What is the size of <clusterName> cluster
 
-* Query VM instance type: 
-Utterance: What is the instance type of <clusterName> cluster
+* Query VM instance type: What is the instance type of <clusterName> cluster
 
-* Query CPU utilization: 
-Utterance: What is the average cpu utilization of <clusterName> cluster
+* Query CPU utilization: What is the average cpu utilization of <clusterName> cluster
 
