@@ -1,14 +1,34 @@
-**Comment:**
-Both Idea A and D are good 
-On D: are you  trying to add value to what quora does with topics?
-or something else.... it has to have novelty. 
+## Project team 18
+### Team Members
+Srinivasa Prasad Sunnapu
+Shraddha Kabade
+Jaykumar Patel
+Raviteja Kommalapati
 
-On A: creating VMs and deploying  software using alexa would be tricky as it has to handle un  happy path (error handling)
+### Introduction
+DevOpsBot automates routine AWS operations performed by AWS developer or performance engineer like deploying application or load scripts, scaling up / down clusters, querying performance metrics etc. by taking conversational approach with Alexa. AWS engineer can get this done by having a conversation with Alexa, instead of connected to computer and performing these operations on AWS console. This solutions involves integration of different component like Alexa Custom Skill, AWS Lambda Intents interpreter and EC2 provision request handler using AWS SDK.
 
-pick the one that your team is most  confident of executing and remove other  ideas from the README
+### System Interaction
+Use Invocation name to start: "Open Ops Helper".
+Sample utterances for each action are listed below.
+* Scale up cluster: 
+Utterance: Scale up <clusterName> cluster by <numbeOfInstances> VM instances 
+  
+* Scale down cluster: 
+Utterance: Scale down <clusterName> cluster by <numbeOfInstances> VM instances
 
-**Idea A: PaaS DevOps with Alexa**
+* Resize cluster: 
+Utterance: Resize <clusterName> cluster to <numberOfInstances> instances
 
-Developing custom skill for Alexa to manage DevOps in cloud. Once could be able to bring deploy an image into EC2, add / remove instances from server cluster, change instance type configuration, query on instances performance metrics, billing queries etc.
+* Find pending requests: 
+Utterance: What is the status of my previous request
 
-Tech Stack: Alexa custom skill, AWS Lamda, PaaS provider
+* Query size of cluster: 
+Utterance: What is the size of <clusterName> cluster
+
+* Query VM instance type: 
+Utterance: What is the instance type of <clusterName> cluster
+
+* Query CPU utilization: 
+Utterance: What is the average cpu utilization of <clusterName> cluster
+
