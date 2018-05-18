@@ -1,9 +1,9 @@
 ## Project team 18
 ### Team Members
-Srinivasa Prasad Sunnapu
-Shraddha Kabade
-Jaykumar Patel
-Raviteja Kommalapati
+* Srinivasa Prasad Sunnapu
+* Shraddha Kabade
+* Jaykumar Patel
+* Raviteja Kommalapati
 
 ### Introduction
 DevOpsBot automates routine AWS operations performed by AWS developer or performance engineer like deploying application or load scripts, scaling up / down clusters, querying performance metrics etc. by taking conversational approach with Alexa. AWS engineer can get this done by having a conversation with Alexa, instead of connected to computer and performing these operations on AWS console. This solutions involves integration of different component like Alexa Custom Skill, AWS Lambda Intents interpreter and EC2 provision request handler using AWS SDK.
